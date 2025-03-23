@@ -12,7 +12,7 @@
 #include "platform.h"
 #include "player.h"
 #include "bullet.h"
-
+#include "particle.h"
 #pragma comment(lib, "Winmm.lib")
 
 bool is_debug = false;	// 是否开启调试模式
@@ -31,7 +31,7 @@ Player* player_2 = nullptr;
 
 std::vector<Platform> platform_list;
 std::vector<Bullet*> bullet_list; 
-
+std::vector<Particle> particle_list;
 
 void flip_atlas(Atlas& src, Atlas& dst)
 {
@@ -128,6 +128,9 @@ IMAGE img_winner_bar; // 获胜玩家背景文本图片
 IMAGE img_avatar_peashooter; // 婉逗射手头像图片
 IMAGE img_avatar_sunflower; // 龙日葵头像图片
 
+IMAGE* img_player_1_avatar = nullptr;
+IMAGE* img_player_2_avatar = nullptr;
+
 
 void load_game_resources()
 {
@@ -220,11 +223,9 @@ void load_game_resources()
 int main()
 {
 	ExMessage  msg;
-	const int FPS = 144;
+	const int FPS = 60;
 
 	load_game_resources();
-
-
 
 	// EW_SHOWCONSOLE 显示控制台。initgraph必需在很前面！！比如在settextstyle前面
 	initgraph(1280, 720, EW_SHOWCONSOLE);

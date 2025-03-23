@@ -45,6 +45,9 @@ extern Atlas atlas_sunflower_idle_right; // ÁúÈÕ¿û³¯ÏòÓÒµÄÄ¬ÈÏ¶¯»­Í¼¼¯
 extern IMAGE img_avatar_peashooter; // Íñ¶ºÉäÊÖÍ·ÏñÍ¼Æ¬
 extern IMAGE img_avatar_sunflower; // ÁúÈÕ¿ûÍ·ÏñÍ¼Æ¬
 
+extern IMAGE* img_player_2_avatar;
+extern IMAGE* img_player_1_avatar;
+
 extern SceneManager scene_manager;
 
 class SelectorScene : public Scene
@@ -263,9 +266,11 @@ public:
 		{
 		case PlayerType::Peashooter:
 			player_1 = new PeashooterPlayer();
+			img_player_1_avatar = &img_avatar_peashooter;
 			break;
 		case PlayerType::Sunflower:
 			player_1 = new SunflowerPlayer();
+			img_player_1_avatar = &img_avatar_sunflower;
 			break;
 		}
 		player_1->set_id(PlayerID::P1);
@@ -273,12 +278,16 @@ public:
 		{
 		case PlayerType::Peashooter:
 			player_2 = new PeashooterPlayer();
+			img_player_2_avatar = &img_avatar_peashooter;
 			break;
 		case PlayerType::Sunflower:
 			player_2 = new SunflowerPlayer();
+			img_player_2_avatar = &img_avatar_sunflower;
 			break;
 		}
 		player_2->set_id(PlayerID::P2);
+
+		mciSendString(_T("stop bgm_menu"), NULL, 0, NULL);
 	}
 private:
 	enum class PlayerType {	

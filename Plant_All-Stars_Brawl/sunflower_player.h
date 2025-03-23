@@ -17,6 +17,10 @@ extern Atlas atlas_sun_text;					// “日” 文本动画图集
 extern Atlas atlas_sunflower_attack_ex_left;	// 龙日葵朝向左的特殊攻击动画图集
 extern Atlas atlas_sunflower_attack_ex_right;	// 龙日葵朝向右的特殊攻击动画图集
 
+extern Atlas atlas_sunflower_die_left;  // 龙日葵朝向左的死亡动画图集
+extern Atlas atlas_sunflower_die_right; // 龙日葵朝向右的死亡动画图集
+
+
 extern Player* player_1;
 extern Player* player_2;
 
@@ -65,6 +69,15 @@ public:
 			}
 		);
 		attack_cd = 250;
+
+		animation_die_left.set_atlas(&atlas_sunflower_die_left);
+		animation_die_left.set_interval(150);
+		animation_die_left.set_loop(false);
+
+		animation_die_right.set_atlas(&atlas_sunflower_die_right);
+		animation_die_right.set_interval(150);
+		animation_die_right.set_loop(false);
+
 	}
 	~SunflowerPlayer() = default;
 
@@ -103,7 +116,7 @@ public:
 		bullet->set_velocity(is_facing_right ? velocity_sun.x : -velocity_sun.x, velocity_sun.y);
 
 		bullet->set_collide_target(id == PlayerID::P1 ? PlayerID::P2 : PlayerID::P1);
-		bullet->set_callback([&]() {mp += 35; });
+		bullet->set_callback([&]() {mp += 25; });
 
 
 		bullet_list.push_back(bullet); 
@@ -136,7 +149,7 @@ public:
 
 		bullet->set_collide_target(id == PlayerID::P1 ? PlayerID::P2 : PlayerID::P1);
 
-		bullet->set_callback([&]() {mp += 50; });
+		bullet->set_callback([&]() {mp = min(mp + 55, 100); });
 		bullet_list.push_back(bullet);
 
 

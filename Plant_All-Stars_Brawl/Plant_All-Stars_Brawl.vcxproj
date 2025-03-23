@@ -151,6 +151,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="particle.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="resources\1P.png" />

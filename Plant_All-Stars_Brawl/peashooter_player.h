@@ -13,6 +13,9 @@ extern Atlas atlas_peashooter_run_right;	// 婉逗射手朝向右的跑步动画图集
 extern Atlas atlas_peashooter_attack_ex_left; // 婉逗射手朝向左的特殊攻击动画图集
 extern Atlas atlas_peashooter_attack_ex_right; // 婉逗射手朝向右的特殊攻击动画图集
 
+extern Atlas atlas_peashooter_die_left; // 婉逗射手朝向左的死亡动画图集
+extern Atlas atlas_peashooter_die_right; // 婉逗射手朝向右的死亡动画图集
+
 extern std::vector<Bullet*> bullet_list;
 
 
@@ -42,11 +45,25 @@ public:
 			}
 		);
 
+		timer_spwan_pea_ex.set_wait_time(100);
+		timer_spwan_pea_ex.set_callback([&]() 
+			{
+				spawn_pea_bullet(speed_pea_ex);
+			});
+
 		animation_attack_ex_right.set_atlas(&atlas_peashooter_attack_ex_right);
 		animation_attack_ex_right.set_interval(75);
 
 		animation_attack_ex_left.set_atlas(&atlas_peashooter_attack_ex_left);
 		animation_attack_ex_left.set_interval(75);
+
+		animation_die_left.set_atlas(&atlas_peashooter_die_left);
+		animation_die_left.set_interval(150);
+		animation_die_left.set_loop(false);
+
+		animation_die_right.set_atlas(&atlas_peashooter_die_right);
+		animation_die_right.set_interval(150);
+		animation_die_right.set_loop(false);
 
 	}
 	~PeashooterPlayer() = default;
@@ -120,7 +137,7 @@ private:
 		bullet->set_velocity(bullet_velocity.x, bullet_velocity.y);
 
 		bullet->set_collide_target(id == PlayerID::P1 ? PlayerID::P2 : PlayerID::P1);
-		bullet->set_callback([&]() { mp += 25; });
+		bullet->set_callback([&]() { mp = min(mp + 35, 100); });
 
 		bullet_list.push_back(bullet);
 	}

@@ -29,6 +29,12 @@ public:
 		return size;
 	}
 
+	const Vector2& get_position() const
+	{
+		return position;
+	}
+
+
 	void set_velocity(float x, float y)
 	{
 		velocity = { x, y };
